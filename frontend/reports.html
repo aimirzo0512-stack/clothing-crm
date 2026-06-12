@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StyleCRM — Reports</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script>
+    Auth.guard();
+    UI.layout('reports.html', 'Reports & Analytics');
+    document.getElementById('content').innerHTML = `
+      <div class="toolbar">
+        <label class="muted">Sales period:</label>
+        <select class="form-control" id="period" style="max-width:180px">
+          <option value="daily">Daily (last 14 days)</option>
+          <option value="weekly">Weekly (last 8 weeks)</option>
+          <option value="monthly" selected>Monthly (last 12 months)</option>
+        </select>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><h2>Sales report</h2></div>
+        <div class="panel-body"><canvas id="salesChart" height="90"></canvas></div>
+      </div>
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-header"><h2>Top-selling products</h2></div>
+          <div class="table-wrap"><table><thead><tr><th>Product</th><th>Units sold</th><th>Revenue</th></tr></thead><tbody id="topProducts"></tbody></table></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><h2>Customer analytics</h2></div>
+          <div class="panel-body" id="customerAnalytics"></div>
+        </div>
+      </div>`;
+  </script>
+  <script src="js/reports.js"></script>
+</body>
+</html>

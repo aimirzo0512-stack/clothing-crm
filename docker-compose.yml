@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: clothing-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: clothing_crm
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+
+  backend:
+    image: clothing-backend:latest
+    container_name: clothing-backend
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/clothing_crm
+      DB_USERNAME: postgres
+      DB_PASSWORD: 1234
+    ports:
+      - "8080:8080"
+
+  frontend:
+    image: clothing-frontend:latest
+    container_name: clothing-frontend
+    depends_on:
+      - backend
+    restart: unless-stopped
+    ports:
+      - "80:80"
