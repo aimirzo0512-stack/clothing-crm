@@ -11,7 +11,7 @@ services:
       - "5432:5432"
 
   backend:
-    image: clothing-backend:latest
+    image: ./backend
     container_name: clothing-backend
     depends_on:
       - postgres
@@ -24,7 +24,7 @@ services:
       - "8080:8080"
 
   frontend:
-    image: clothing-frontend:latest
+    image: ./frontend
     container_name: clothing-frontend
     depends_on:
       - backend
