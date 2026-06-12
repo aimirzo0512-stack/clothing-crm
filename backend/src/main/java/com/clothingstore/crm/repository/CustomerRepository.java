@@ -32,7 +32,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 //    long countByStatus(CustomerStatus status);
 
     @Query("""
-SELECT c FROM Customer c
+SELECT c
+FROM Customer c
 """)
     Page<Customer> search(
             @Param("search") String search,
