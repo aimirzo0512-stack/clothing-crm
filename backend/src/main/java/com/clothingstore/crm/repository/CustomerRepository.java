@@ -12,17 +12,30 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     boolean existsByEmail(String email);
 
+//    @Query("""
+//SELECT c FROM Customer c
+//WHERE (
+//    :search IS NULL OR
+//    c.fullName LIKE %:search% OR
+//    c.email LIKE %:search% OR
+//    c.phoneNumber LIKE %:search%
+//)
+//AND (
+//    :status IS NULL OR c.status = :status
+//)
+//""")
+//    Page<Customer> search(
+//            @Param("search") String search,
+//            @Param("status") CustomerStatus status,
+//            Pageable pageable);
+//
+//    long countByStatus(CustomerStatus status);
+
     @Query("""
 SELECT c FROM Customer c
-WHERE (:search IS NULL OR
-       c.fullName LIKE CONCAT('%', :search, '%') OR
-       c.email LIKE CONCAT('%', :search, '%') OR
-       c.phoneNumber LIKE CONCAT('%', :search, '%'))
-AND (:status IS NULL OR c.status = :status)
 """)
-    Page<Customer> search(@Param("search") String search,
-                          @Param("status") CustomerStatus status,
-                          Pageable pageable);
-
-    long countByStatus(CustomerStatus status);
+    Page<Customer> search(
+            @Param("search") String search,
+            @Param("status") CustomerStatus status,
+            Pageable pageable);
 }
